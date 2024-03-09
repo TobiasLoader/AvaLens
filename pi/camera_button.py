@@ -17,8 +17,10 @@ print(PUBLIC_KEY)
 
 def upload_image(imagePath, PUBLIC_KEY):
     try:
-        files = {'image': open(imagePath, 'rb')}
-        data = {'public_key': PUBLIC_KEY}
+        files = {
+            'image': open(imagePath, 'rb'),
+            'public_key': PUBLIC_KEY
+        }
         response = requests.post(f'{SERVER_ADDRESS}/pi/upload', files=files, data=data)
         if response.ok:
             print("Image successfully uploaded")

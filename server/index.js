@@ -74,7 +74,7 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
   console.log("in pi/upload");
   
   console.log('File:', req.file);
-  console.log('Metadata:', req.body); // Access metadata
+  console.log('Metadata:', req); // Access metadata
   
   const camera_id = req.body.public_key;
   console.log("camera_id: " + camera_id);
