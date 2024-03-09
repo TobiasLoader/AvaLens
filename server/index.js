@@ -73,10 +73,10 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
   // use req to get camera id
   console.log("in pi/upload");
   
-  // console.log('File:', req.file);
-  // console.log('Metadata:', req); // Access metadata
+  console.log('File:', req.file);
+  console.log('Metadata:', req.body); // Access metadata
   
-  const camera_id = req.body.public_key;
+  const camera_id = req.body.public_key;
   console.log("camera_id: " + camera_id);
   const img_data = req.file;
 
@@ -109,13 +109,15 @@ io.sockets.on("connection", function (socket) {
   });
   
   // create association between photographer and camera
-  socket.on("borrow_camera", function (client_id, camera_id) {
-    console.log("in borrow_camera");
-    if (camera_id in camera_to_client && camera_to_client[camera_id] == false && client_id in socket_map) {
+  socket.on("borrow_camera", function (client_id,camera_id){
+    if (camera_id in camera_to_client
+      && !camera_to_client[camera_id]
+      && client_id in socket_map
+    ){
       socket_map[client_id]["borrowing"] = camera_id;
       camera_to_client[camera_id] = client_id;
     } else {
-      console.log("Either camera is already borrowed, or client doesn't exist with ID given.");
+      console.log("Either camera or client doesn't exist with ID given.");
     }
   });
   
