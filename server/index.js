@@ -110,8 +110,9 @@ io.sockets.on("connection", function (socket) {
   
   // create association between photographer and camera
   socket.on("borrow_camera", function (client_id,camera_id){
+    console.log()
     if (camera_id in camera_to_client
-      && !camera_to_client[camera_id]
+      && camera_to_client[camera_id] != false
       && client_id in socket_map
     ){
       socket_map[client_id]["borrowing"] = camera_id;
