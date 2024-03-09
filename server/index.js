@@ -86,7 +86,7 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
 
 app.use('/uploads', express.static('uploads'));
 
-app.get('/image/:filename', (req, res) => {
+app.get('/uploads/:filename', (req, res) => {
     const filename = req.params.filename;
     const imagePath = path.join(__dirname, 'uploads', filename);
 
