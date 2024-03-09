@@ -29,15 +29,16 @@ const socket_map = {
 }
 
 app.post("/init-camera", (req, res) => {
-  // use req to get camera id
-  console.log(req);
-  const camera_id = req.body.public_key;
+  console.log("in init-camera");
+  const camera_id = req.body.public_key; // Assuming the camera ID is sent in the request body
   if (!(camera_id in camera_to_client)){
-    camera_to_client[camera_id] = false;
+    camera_to_client[camera_id] = false; // Initialize the camera ID with a default value
+    res.json({ success: true, message: "Camera initialized" });
   } else {
     console.log("Camera already exists");
+    res.json({ success: false, message: "Camera already exists" });
   }
-})
+});
 
 app.post("/reset-camera", (req, res) => {
   // use req to get camera id
@@ -59,7 +60,9 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
   console.log('File:', req.file);
   console.log('Metadata:', req.body); // Access metadata
   
-  const camera_id = req.body.public_key;
+  const camera_id = req.body.public_key;
+  console.log("camera_id: " + camera_id);
+  console.log("camera_id: " + camera_id);
   const img_data = req.file;
 
   if (camera_id in camera_to_client){
