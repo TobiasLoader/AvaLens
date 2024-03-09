@@ -1,55 +1,52 @@
-pragma solidity ^0.8.0;
+// IPFS should be established separately, and data like this:
+// {
+//   "name": "My image NFT",
+//   "description": "This is an NFT minted using my smart contract.",
+//   "image": "ipfs://<your-ipfs-hash-here>"
+// }
 
-// Assuming IPFS integration and other libraries are set up
-// For the sake of brevity, error checks, events, and modifiers are omitted
+// from https://www.quicknode.com/guides/ethereum-development/nfts/how-to-create-and-deploy-an-erc-721-nft
 
-// PHOTOGRAPH contract takes care of the minting,
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.20;
 
-contract Photograph {
-    struct TokenData {
-        string imageIPFSURI;
-        address cameraAddr;
-        address photographerAddr;
-        string cameraSig;
-        string photoSig;
-        uint256 batchNumber;
-        uint256 merit;
-        bool inPool;
+import "@openzeppelin/contracts@5.0.0/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts@5.0.0/token/ERC721/extensions/ERC721URIStorage.sol";
+import "@openzeppelin/contracts@5.0.0/token/ERC721/extensions/ERC721Burnable.sol";
+import "@openzeppelin/contracts@5.0.0/access/Ownable.sol";
+
+contract Photograph is ERC721, ERC721URIStorage, ERC721Burnable, Ownable {
+    constructor(address initialOwner)
+        ERC721("MERIT", "MERIT")
+        Ownable(initialOwner)
+    {}
+
+    function safeMint(address to, uint256 tokenId, string memory uri)
+        public
+        onlyOwner
+    {
+        _safeMint(to, tokenId);
+        _setTokenURI(tokenId, uri);
     }
 
-    mapping(address => uint256) public ledger;
-    mapping(uint256 => TokenData) public metadata;
-    uint256 public tokenIdCounter;
+    // The following functions are overrides required by Solidity.
 
-    constructor() {
-        tokenIdCounter = 0;
+    function tokenURI(uint256 tokenId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (string memory)
+    {
+        return super.tokenURI(tokenId);
     }
 
-    function mint(string memory _imgURI, address _cameraAddr, address _photographerAddr, string memory _cameraSig, string memory _photoSig) public returns (uint256) {
-        tokenIdCounter++;
-        ledger[_photographerAddr] = tokenIdCounter;
-        metadata[tokenIdCounter] = TokenData({
-            imageIPFSURI: _imgURI,
-            cameraAddr: _cameraAddr,
-            photographerAddr: _photographerAddr,
-            cameraSig: _cameraSig,
-            photoSig: _photoSig,
-            batchNumber: 0, // Assuming batch number and merit are set later
-            merit: 0,
-            inPool: false
-        });
-        // More logic for VOTE initialization if necessary
-        return tokenIdCounter;
+    function supportsInterface(bytes4 interfaceId)
+        public
+        view
+        override(ERC721, ERC721URIStorage)
+        returns (bool)
+    {
+        return super.supportsInterface(interfaceId);
     }
-
-    function transfer(uint256 _tokenId, address _from, address _to) public {
-        // Ownership checks and other logic
-        ledger[_from] = 0;
-        ledger[_to] = _tokenId;
-        // Transfer logic and event emissions
-    }
-
-    // Other functions like swap(), setMerit(), lockInPool(), unlockFromPool()
-    // would be implemented here following the logic outlined in your draft.
 }
 
