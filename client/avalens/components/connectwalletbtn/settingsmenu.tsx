@@ -1,5 +1,5 @@
-import { Button } from '@/ui/button';
-import {
+import { Button } from '../button';
+{/* import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuGroup,
@@ -12,7 +12,7 @@ import {
 import { toast } from '@/ui/hooks/use-toast';
 import { truncateAddress } from '@/utils/truncate-address';
 import { ExitIcon } from '@radix-ui/react-icons';
-import { Circle, Settings } from 'lucide-react';
+import { Circle, Settings } from 'lucide-react'; */}
 import { useAccount, useDisconnect } from 'wagmi';
 
 export const SettingsMenu = () => {

@@ -1,11 +1,10 @@
-import { Button, type ButtonProps } from '@/ui/button';
+import { Button } from '../button';
 
 import { useAccount } from 'wagmi';
-import { SettingsMenu } from './settings-menu';
-import { cn } from '@/utils/cn';
+import { SettingsMenu } from './settingsmenu';
 import { useWeb3Modal } from '@web3modal/wagmi/react';
 
-export const ConnectWalletButton = ({ className, ...rest }: ButtonProps) => {
+export const ConnectWalletButton = ({ className }) => {
   const { address, isConnected } = useAccount();
   const { open } = useWeb3Modal();
 
@@ -15,10 +14,8 @@ export const ConnectWalletButton = ({ className, ...rest }: ButtonProps) => {
 
   return (
     <Button
-      variant="outline"
-      className={cn('rounded-full', className)}
+      className={className}
       onClick={() => open()}
-      {...rest}
     >
       Connect Wallet
     </Button>

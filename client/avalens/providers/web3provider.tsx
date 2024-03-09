@@ -1,5 +1,3 @@
-'use server'
-
 import { TELEPORTER_CONFIG } from '@/constants/chains';
 import { WagmiProvider } from 'wagmi';
 import { type PropsWithChildren } from 'react';
