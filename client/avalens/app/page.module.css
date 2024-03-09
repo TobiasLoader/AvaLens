@@ -234,10 +234,44 @@
 
 /*  CUSTOM CSS  */
 
+
+.connectWallet {
+  font-family: var(--font-mono);
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px 25px;
+  background: rgba(255,255,255,0.05);
+  border: rgba(255,255,255,0.3) 1px solid;
+}
+
+.connectWallet:hover {
+  background: rgba(255,255,255,0.1);
+  border: rgba(255,255,255,0.4) 1px solid;
+}
+
+
+
 .socketConnect {
-  background: black;
+  font-size: 13px;
+  font-family: var(--font-mono);
+  border: rgba(255,255,255,0.3) 1px solid;
+  border-radius: 5px;
+  padding: 10px 25px;
+  width:fit-content;
+  /* transition:width 500ms ease-in-out; */
 }
 
 .imgCapture {
   width:300px;
+}
+
+.connected {
+  background: linear-gradient(90deg, rgba(96, 195, 111, 0.25) 0%, rgba(83, 130, 201, 0.25) 100%);
+  border: rgba(255,255,255,0.3) 1px solid;
+  color: rgb(236, 255, 223);
+}
+
+.connecting {
+  background: rgba(255, 232, 235, 0.1);
+  color: rgb(255, 232, 235);
 }

@@ -1,4 +1,5 @@
 import { Button } from '../button';
+import styles from "../../app/page.module.css";
 
 import { useAccount } from 'wagmi';
 import { SettingsMenu } from './settingsmenu';
@@ -14,7 +15,7 @@ export const ConnectWalletButton = ({ className }) => {
 
   return (
     <Button
-      className={className}
+      className={styles.connectWallet}
       onClick={() => open()}
     >
       Connect Wallet

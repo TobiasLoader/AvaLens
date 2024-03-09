@@ -34,11 +34,17 @@ export default function SocketClient({ serverUrl, clientId }) {
 
     loadSocketIO();
   }, [serverUrl, clientId]);
-
+<!--       {imageSrc && <img src={imageSrc} className={styles.imgCapture} alt="Captured" />} -->
+  
   return (
-    <div className={styles.socketConnect}>
-      <p>{socketLoaded ? "Socket Connected" : "Connecting..."}</p>
-      {imageSrc && <img src={imageSrc} className={styles.imgCapture} alt="Captured" />}
-    </div>
+    socketLoaded ? (
+      <div className={`${styles.socketConnect} ${styles.connected}`}>
+        <p>Socket Connected!</p>
+      </div>
+    ) : (
+      <div className={`${styles.socketConnect} ${styles.connecting}`}>
+        <p>Connecting...</p>      
+      </div>
+    )
   );
 };

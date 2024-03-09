@@ -17,18 +17,13 @@ print(PUBLIC_KEY)
 
 def upload_image(imagePath, PUBLIC_KEY):
     try:
-        with open(imagePath, 'rb') as image_file:
-            files = {
-                'image': image_file
-            }
-            data = {
-                'public_key': PUBLIC_KEY
-            }
-            response = requests.post(f'{SERVER_ADDRESS}/pi/upload', files=files, data=data)
-            if response.ok:
-                print("Image successfully uploaded")
-            else:
-                print(f"Failed to upload image: {response.text}")
+        files = {'image': open(imagePath, 'rb')}
+        data = {'public_key': PUBLIC_KEY}
+        response = requests.post(f'{SERVER_ADDRESS}/pi/upload', files=files, data=data)
+        if response.ok:
+            print("Image successfully uploaded")
+        else:
+            print(f"Failed to upload image: {response.text}")
     except Exception as e:
         print(f"An error occurred during upload: {e}")
 
