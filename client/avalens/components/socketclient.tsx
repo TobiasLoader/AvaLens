@@ -4,39 +4,41 @@ import React, { useState, useEffect } from 'react';
 export default function SocketClient({ serverUrl, clientId }) {
   const [socket, setSocket] = useState(null);
   const [socketLoaded, setSocketLoaded] = useState(false);
-  const [imageUrl, setImageUrl] = useState(''); // Add state to store the image URL
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     const loadSocketIO = async () => {
       const { default: io } = await import('socket.io-client');
-      const socket = io(serverUrl);
-    
-      socket.on('connect', () => {
-        console.log('Socket connected:', socket.id);
-        setSocket(socket);
+      const newSocket = io(serverUrl);
+
+      newSocket.on('connect', () => {
+        console.log('Socket connected:', newSocket.id);
+        setSocket(newSocket);
         setSocketLoaded(true);
-        socket.emit("client_init", clientId);
-        socket.emit("borrow_camera", clientId, "00000001"); // You might need to handle the camera_id dynamically
+        newSocket.emit("client_init", clientId);
+        newSocket.emit("borrow_camera", clientId, "00000001");
+        // newSocket.emit("return_camera", clientId, camera_id);
       });
 
-      // Handle the "pi-capture" event to update the image URL
-      socket.on("pi-capture", (imgUrl) => {
-        console.log("Image URL received:", imgUrl);
-        setImageUrl(imgUrl); // Update the imageUrl state with the received URL
+      newSocket.on("pi-capture", (data) => {
+        console.log(data);
+        if (data.img_data && data.img_data.filename) {
+          const imageUrl = `${serverUrl}/image/${data.img_data.filename}`;
+          setImageSrc(imageUrl);
+        }
       });
-   
+
       // Clean up on component unmount
-      return () => socket.disconnect();
+      return () => newSocket.disconnect();
     };
 
     loadSocketIO();
-  }, [serverUrl, clientId]); // Re-run the effect if serverUrl or clientId changes
+  }, [serverUrl, clientId]);
 
   return (
     <div className={styles.socketConnect}>
       <p>{socketLoaded ? "Socket Connected" : "Connecting..."}</p>
-      {/* Conditionally render the image if imageUrl is set */}
-      {imageUrl && <img src={imageUrl} alt="Captured" style={{ maxWidth: '100%', maxHeight: '400px' }} />}
+      {imageSrc && <img src={imageSrc} alt="Captured" />}
     </div>
   );
 };
