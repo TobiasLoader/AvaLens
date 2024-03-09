@@ -87,17 +87,30 @@ io.sockets.on("connection", (socket) => {
   });
 
   socket.on("borrow_camera", (client_id, camera_id) => {
-    if (camera_id in camera_to_client && camera_to_client[camera_id] === null) {
-      if (client_id in socket_map) {
-        socket_map[client_id]["borrowing"] = camera_id;
-        camera_to_client[camera_id] = client_id;
-        console.log(`Camera ${camera_id} borrowed by client ${client_id}`);
-      } else {
-        console.log(`Client ${client_id} does not exist.`);
-      }
-    } else {
-      console.log(`Camera ${camera_id} is not available for borrowing.`);
+    console.log(`Attempt to borrow camera ${camera_id} by client ${client_id}`);
+    // Check if camera is initialized
+    if (!(camera_id in camera_to_client)) {
+      console.log(`Camera ${camera_id} not initialized.`);
+      socket.emit("borrow_response", { success: false, message: "Camera not initialized" });
+      return;
     }
+    // Check if camera is already borrowed
+    if (camera_to_client[camera_id] !== null) {
+      console.log(`Camera ${camera_id} is already borrowed.`);
+      socket.emit("borrow_response", { success: false, message: "Camera is already borrowed" });
+      return;
+    }
+    // Check if client exists
+    if (!(client_id in socket_map)) {
+      console.log(`Client ${client_id} does not exist.`);
+      socket.emit("borrow_response", { success: false, message: "Client does not exist" });
+      return;
+    }
+
+    socket_map[client_id]["borrowing"] = camera_id;
+    camera_to_client[camera_id] = client_id;
+    console.log(`Camera ${camera_id} successfully borrowed by client ${client_id}`);
+    socket.emit("borrow_response", { success: true, message: "Camera borrowed successfully" });
   });
 
   socket.on("return_camera", (client_id, camera_id) => {
