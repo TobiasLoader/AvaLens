@@ -3,7 +3,7 @@ const app = express();
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const multer  = require("multer");
+const multer = require("multer");
 const upload = multer({ dest: 'uploads/' });
 require("dotenv").config();
 
@@ -12,7 +12,7 @@ const port = process.env.PORT || 3001;
 
 const io = new Server(server, {
   cors: {
-    origin:client
+    origin:clientx
   }
 });
 
@@ -33,19 +33,25 @@ const socket_map = {
 }
 
 app.post("/init-camera", (req, res) => {
-  // use req to get camera id
-  const camera_id = 0;
-  if (!(camera_id in camera_to_client)){
+  const camera_id = req.body.camera_id; // Assuming camera_id is sent in the body
+  if (!camera_id) {
+    return res.status(400).send("Camera ID is required");
+  }
+
+  if (!(camera_id in camera_to_client)) {
     camera_to_client[camera_id] = false;
+    res.send({ message: "Camera initialized successfully" });
   } else {
     console.log("Camera already exists");
+    res.send({ message: "Camera already exists" });
   }
-})
+});
+
 
 app.post("/pi/upload", upload.single("image"), (req, res) => {
-  console.log(req.file);
+  console.log(req.file);
   // use req to get camera id
-  const camera_id = 0;
+  const camera_id = 0;
   const img_data = [];
 
   if (camera_id in camera_to_client){

@@ -39,7 +39,7 @@ GPIO.add_event_detect(14, GPIO.FALLING, callback=take_photo, bouncetime=300)
 
 try:
     print("Ready to take photos. Press the button...")
-    data = {'public_key': PUBLIC_KEY}
+    data = {'camera_id': PUBLIC_KEY}
     response = requests.post(f'{SERVER_ADDRESS}/init_camera', data=data)
     
     while True:
