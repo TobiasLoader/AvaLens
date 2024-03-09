@@ -34,6 +34,7 @@ app.post("/init-camera", (req, res) => {
   if (!(camera_id in camera_to_client)){
     camera_to_client[camera_id] = false; // Initialize the camera ID with a default value
     res.json({ success: true, message: "Camera initialized" });
+    console.log("Camera initialized with id: " + camera_id);
   } else {
     console.log("Camera already exists");
     res.json({ success: false, message: "Camera already exists" });
