@@ -1,39 +1,40 @@
-
 import styles from "../app/page.module.css";
-
 import React, { useState, useEffect } from 'react';
 
 export default function SocketClient({ serverUrl, clientId }) {
   const [socket, setSocket] = useState(null);
   const [socketLoaded, setSocketLoaded] = useState(false);
+  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     const loadSocketIO = async () => {
       const { default: io } = await import('socket.io-client');
-      const socket = io(serverUrl);
-    
-      socket.on('connect', () => {
-        console.log('Socket connected:', socket.id);
-        setSocket(socket);
+      const newSocket = io(serverUrl);
+
+      newSocket.on('connect', () => {
+        console.log('Socket connected:', newSocket.id);
+        setSocket(newSocket);
         setSocketLoaded(true);
+        newSocket.emit("client_init", clientId);
+        newSocket.emit("borrow_camera", clientId, "00000001");
+        // newSocket.emit("return_camera", clientId, camera_id);
       });
-      
-      socket.emit("client_init", clientId);
-      
-      socket.emit("borrow_camera", clientId, "00000001");
-      {/* socket.emit("return_camera", clientId, camera_id); */}
-  
-      socket.on("pi-capture", (data) => {
+
+      newSocket.on("pi-capture", (data) => {
         console.log(data);
+        if (data.img_data && data.img_data.filename) {
+          const imageUrl = `${serverUrl}/uploads/${data.img_data.filename}`;
+          setImageSrc(imageUrl);
+        }
       });
-   
-      // Emit an event or set up listeners here
+
       // Clean up on component unmount
-      return () => socket.disconnect();
+      return () => newSocket.disconnect();
     };
 
     loadSocketIO();
-  }, [serverUrl]); // Re-run the effect if serverUrl changes
+  }, [serverUrl, clientId]);
+<!--       {imageSrc && <img src={imageSrc} className={styles.imgCapture} alt="Captured" />} -->
   
   return (
     socketLoaded ? (
