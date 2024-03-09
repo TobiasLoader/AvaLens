@@ -4,7 +4,7 @@
   "description": "node server for avalens",
   "main": "index.js",
   "scripts": {
-    "build": "echo \"Build here?\"",
+    "build": "npm install",
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
