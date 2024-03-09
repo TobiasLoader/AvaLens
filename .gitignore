@@ -1,2 +1,4 @@
 .DS_STORE
 subnets/bin
+server/node_modules
+server/.env

@@ -1,0 +1,21 @@
+{
+    "Name": "avalenstest",
+    "VM": "Subnet-EVM",
+    "VMVersion": "v0.6.2",
+    "RPCVersion": 34,
+    "Subnet": "avalenstest",
+    "TokenName": "MERIT",
+    "ChainID": "",
+    "Version": "1.4.0",
+    "Networks": null,
+    "ElasticSubnet": null,
+    "ImportedFromAPM": false,
+    "ImportedVMID": "",
+    "CustomVMRepoURL": "",
+    "CustomVMBranch": "",
+    "CustomVMBuildScript": "",
+    "TeleporterReady": true,
+    "TeleporterKey": "cli-teleporter-deployer",
+    "TeleporterVersion": "v1.0.0",
+    "SubnetEVMMainnetChainID": 0
+}
