@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+app.use(express.json());
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
@@ -16,12 +17,7 @@ const io = new Server(server, {
   }
 });
 
-app.post("/api/upload", upload.single("image"), (req, res) => {
-  console.log(req);
-  console.log(req.file);
-  res.send("Image uploaded successfully!");
-});
-
+// template for below two data structures
 var camera_to_client = {
   "camera_id":false
 };
@@ -33,30 +29,42 @@ const socket_map = {
 }
 
 app.post("/init-camera", (req, res) => {
-  const camera_id = req.body.camera_id; // Assuming camera_id is sent in the body
-  if (!camera_id) {
-    return res.status(400).send("Camera ID is required");
-  }
-
-  if (!(camera_id in camera_to_client)) {
+  // use req to get camera id
+  console.log(req);
+  const camera_id = req.body.public_key;
+  if (!(camera_id in camera_to_client)){
     camera_to_client[camera_id] = false;
-    res.send({ message: "Camera initialized successfully" });
   } else {
     console.log("Camera already exists");
-    res.send({ message: "Camera already exists" });
+  }
+})
+
+app.post("/reset-camera", (req, res) => {
+  // use req to get camera id
+  if (camera_id in camera_to_client){
+    const client_id = camera_to_client[camera_id];
+    if (client_id && client_id in socket_map){
+      socket_map[client_id]["borrowing"] = false;
+    }
+    camera_to_client[camera_id] = false;
+    
+  } else {
+    console.log("Camera doesn't exist");
   }
 });
 
-
 app.post("/pi/upload", upload.single("image"), (req, res) => {
-  console.log(req.file);
   // use req to get camera id
-  const camera_id = 0;
-  const img_data = [];
+  
+  console.log('File:', req.file);
+  console.log('Metadata:', req.body); // Access metadata
+  
+  const camera_id = req.body.public_key;
+  const img_data = req.file;
 
   if (camera_id in camera_to_client){
     const client_id = camera_to_client[camera_id];
-    if (!client_id && client_id in socket_map){
+    if (client_id && client_id in socket_map){
       const socket = socket_map[client_id]["socket"];
       socket.emit("pi-capture", img_data);
     } else {
@@ -69,7 +77,7 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
 
 io.sockets.on("connection", function (socket) {
   console.log("socket initiated",socket.id);
-    
+  
   // init photographer to node server sockets
   socket.on("client_init", function (id){
     if (!(id in socket_map)){
