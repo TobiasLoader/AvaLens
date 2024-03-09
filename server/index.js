@@ -32,7 +32,7 @@ const socket_map = {
   }
 }
 
-app.get("/init-camera", (req, res) => {
+app.post("/init-camera", (req, res) => {
   // use req to get camera id
   const camera_id = 0;
   if (!(camera_id in camera_to_client)){
@@ -42,7 +42,7 @@ app.get("/init-camera", (req, res) => {
   }
 })
 
-app.get("/pi/upload", upload.single("image"), (req, res) => {
+app.post("/pi/upload", upload.single("image"), (req, res) => {
   console.log(req.file);
   // use req to get camera id
   const camera_id = 0;

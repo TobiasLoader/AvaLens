@@ -20,7 +20,7 @@ export default function SocketClient({ serverUrl, clientId }) {
       socket.emit("client_init", clientId);
       
       {/* socket.emit("borrow_camera", clientId, camera_id); */}
-      {/* socket.emit("client_init", clientId, camera_id); */}
+      {/* socket.emit("return_camera", clientId, camera_id); */}
   
       socket.on("pi-capture", (img) => {
         console.log(data);
