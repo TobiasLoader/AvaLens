@@ -56,6 +56,7 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
 
   if (camera_id in camera_to_client) {
     const client_id = camera_to_client[camera_id];
+    console.log("client_id, camera_id, socket_map: " + client_id, camera_id, socket_map)
     if (client_id && client_id in socket_map) {
       const socket = socket_map[client_id]["socket"];
       console.log("emitting pi-capture with following: " + { img_data: req.file })
