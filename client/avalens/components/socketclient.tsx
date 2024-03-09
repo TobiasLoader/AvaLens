@@ -31,6 +31,15 @@ export default function SocketClient({ serverUrl, clientId }) {
       console.log("Data received from pi-capture event:", data);
     });
 
+    newSocket.on("borrow_response", (response) => {
+      if (response.success) {
+        console.log("Camera borrowed successfully:", response.message);
+      } else {
+        console.error("Failed to borrow camera:", response.message);
+      }
+    });
+    
+
     newSocket.on('connect_error', (error) => {
       console.error(`Connection error: ${error.message}`);
     });
