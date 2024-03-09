@@ -237,3 +237,7 @@
 .socketConnect {
   background: black;
 }
+
+.imgCapture {
+  width:300px;
+}

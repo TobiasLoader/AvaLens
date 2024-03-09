@@ -23,7 +23,7 @@ export default function SocketClient({ serverUrl, clientId }) {
       newSocket.on("pi-capture", (data) => {
         console.log(data);
         if (data.img_data && data.img_data.filename) {
-          const imageUrl = `${serverUrl}/image/${data.img_data.filename}`;
+          const imageUrl = `${serverUrl}/uploads/${data.img_data.filename}`;
           setImageSrc(imageUrl);
         }
       });
@@ -38,7 +38,7 @@ export default function SocketClient({ serverUrl, clientId }) {
   return (
     <div className={styles.socketConnect}>
       <p>{socketLoaded ? "Socket Connected" : "Connecting..."}</p>
-      {imageSrc && <img src={imageSrc} alt="Captured" />}
+      {imageSrc && <img src={imageSrc} className={styles.imgCapture} alt="Captured" />}
     </div>
   );
 };
