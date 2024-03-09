@@ -19,6 +19,7 @@ def take_photo(channel):
     imagePath = f"/home/summer-rise/Pictures/photo{imageNum}_{timestamp}.jpg"
     os.system(f"libcamera-still -t 100 -o {imagePath}")
     print(f"Photo taken at {timestamp}")
+    imageNum += 1
 
     try:
         files = {'image': open(imagePath, 'rb')}
@@ -38,6 +39,9 @@ GPIO.add_event_detect(14, GPIO.FALLING, callback=take_photo, bouncetime=300)
 
 try:
     print("Ready to take photos. Press the button...")
+    data = {'public_key': PUBLIC_KEY}
+    response = requests.post(f'{SERVER_ADDRESS}/init_camera', data=data)
+    
     while True:
         time.sleep(0.1)
 except KeyboardInterrupt:
