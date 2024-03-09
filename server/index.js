@@ -1,11 +1,11 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const http = require('http');
+const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const multer  = require('multer');
+const multer  = require("multer");
 const upload = multer({ dest: 'uploads/' });
-require('dotenv').config();
+require("dotenv").config();
 
 const client = process.env.CLIENT || "http://localhost:3000";
 const port = process.env.PORT || 3001;
@@ -16,10 +16,10 @@ const io = new Server(server, {
   }
 });
 
-app.post('/api/upload', upload.single('image'), (req, res) => {
+app.post("/api/upload", upload.single("image"), (req, res) => {
   console.log(req);
   console.log(req.file);
-  res.send('Image uploaded successfully!');
+  res.send("Image uploaded successfully!");
 });
 
 var camera_to_client = {
@@ -32,7 +32,7 @@ const socket_map = {
   }
 }
 
-app.get('/init-camera', (req, res) => {
+app.get("/init-camera", (req, res) => {
   // use req to get camera id
   const camera_id = 0;
   if (!(camera_id in camera_to_client)){
@@ -42,7 +42,7 @@ app.get('/init-camera', (req, res) => {
   }
 })
 
-app.get('/pi/upload', upload.single('image'), (req, res) => {
+app.get("/pi/upload", upload.single("image"), (req, res) => {
   console.log(req.file);
   // use req to get camera id
   const camera_id = 0;
@@ -52,7 +52,7 @@ app.get('/pi/upload', upload.single('image'), (req, res) => {
     const client_id = camera_to_client[camera_id];
     if (!client_id && client_id in socket_map){
       const socket = socket_map[client_id]["socket"];
-      socket.emit('pi-capture', img_data);
+      socket.emit("pi-capture", img_data);
     } else {
       console.log("Client with ID given by `camera_to_client` doesn't exist");
     }
@@ -61,11 +61,11 @@ app.get('/pi/upload', upload.single('image'), (req, res) => {
   }
 })
 
-io.sockets.on('connection', function (socket) {
-  console.log('socket initiated',socket.id);
-  
+io.sockets.on("connection", function (socket) {
+  console.log("socket initiated",socket.id);
+    
   // init photographer to node server sockets
-  socket.on('client_init', function (id){
+  socket.on("client_init", function (id){
     if (!(id in socket_map)){
       socket_map[id] = {};
       socket_map[id]["borrowing"] = false;
@@ -73,10 +73,11 @@ io.sockets.on('connection', function (socket) {
     } else {
       console.log("Socket already exists with client ",id);
     }
+    console.log(socket_map)
   });
   
   // create association between photographer and camera
-  socket.on('borrow_camera', function (client_id,camera_id){
+  socket.on("borrow_camera", function (client_id,camera_id){
     if (camera_id in camera_to_client
       && !camera_to_client[camera_id]
       && client_id in socket_map
@@ -89,7 +90,7 @@ io.sockets.on('connection', function (socket) {
   });
   
   // break association between photographer and camera
-  socket.on('return_camera', function (client_id,camera_id){
+  socket.on("return_camera", function (client_id,camera_id){
     if (camera_to_client[camera_id] == client_id
       && socket_map[client_id]["borrowing"] == camera_id
     ){
@@ -100,8 +101,8 @@ io.sockets.on('connection', function (socket) {
     }
   });
   
-  socket.on('disconnect', function (){
-    console.log('disconnect')
+  socket.on("disconnect", function (){
+    console.log("disconnect")
     socket.disconnect(0);
   })
 });

@@ -1,9 +1,14 @@
 import Image from "next/image";
 import styles from "./page.module.css";
+import SocketClient from '../components/SocketClient';
 
 export default function Home() {
+  const serverUrl = "http://localhost:3001"
   return (
     <main className={styles.main}>
+      <div>
+        <SocketClient serverUrl={serverUrl} clientId={"0x00"} />
+      </div>
       <div className={styles.description}>
         <p>
           Get started by editing&nbsp;
@@ -17,7 +22,7 @@ export default function Home() {
           >
             By{" "}
             <Image
-              src="/vercel.svg"
+              src="/avalens.svg"
               alt="Vercel Logo"
               className={styles.vercelLogo}
               width={100}
