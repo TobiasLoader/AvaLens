@@ -1,43 +1,55 @@
-
 import styles from "../app/page.module.css";
-
 import React, { useState, useEffect } from 'react';
+import { io } from 'socket.io-client';
 
 export default function SocketClient({ serverUrl, clientId }) {
   const [socket, setSocket] = useState(null);
   const [socketLoaded, setSocketLoaded] = useState(false);
 
   useEffect(() => {
-    const loadSocketIO = async () => {
-      const { default: io } = await import('socket.io-client');
-      const socket = io(serverUrl);
-    
-      socket.on('connect', () => {
-        console.log('Socket connected:', socket.id);
-        setSocket(socket);
-        setSocketLoaded(true);
-      });
-      
-      socket.emit("client_init", clientId);
-      
-      socket.emit("borrow_camera", clientId, "00000001");
-      {/* socket.emit("return_camera", clientId, camera_id); */}
-  
-      socket.on("pi-capture", (data) => {
-        console.log(data);
-      });
-   
-      // Emit an event or set up listeners here
-      // Clean up on component unmount
-      return () => socket.disconnect();
-    };
+    // Initialize Socket.IO client
+    const newSocket = io(serverUrl, {
+      reconnectionAttempts: 3,
+      reconnectionDelay: 1000,
+    });
 
-    loadSocketIO();
-  }, [serverUrl]); // Re-run the effect if serverUrl changes
+    newSocket.on('connect', () => {
+      console.log(`Socket connected with ID: ${newSocket.id} to server at ${serverUrl}`);
+      setSocket(newSocket);
+      setSocketLoaded(true);
+
+      // Emit client initialization event
+      newSocket.emit("client_init", clientId);
+      console.log(`Client initialization emitted for clientId: ${clientId}`);
+
+      // Borrow a camera; replace '00000001' with the actual camera ID if necessary
+      newSocket.emit("borrow_camera", clientId, "00000001");
+      console.log(`Borrow camera request emitted for cameraId: 00000001 by clientId: ${clientId}`);
+    });
+
+    newSocket.on("pi-capture", (data) => {
+      console.log("Data received from pi-capture event:", data);
+    });
+
+    newSocket.on('connect_error', (error) => {
+      console.error(`Connection error: ${error.message}`);
+    });
+
+    newSocket.on('disconnect', (reason) => {
+      console.log(`Socket disconnected due to: ${reason}`);
+      setSocketLoaded(false);
+    });
+
+    // Cleanup function to run when component unmounts
+    return () => {
+      console.log('Disconnecting socket as component will unmount');
+      newSocket.disconnect();
+    };
+  }, [serverUrl, clientId]); // Re-run the effect if serverUrl or clientId changes
 
   return (
     <div className={styles.socketConnect}>
       <p>{socketLoaded ? "Socket Connected" : "Connecting..."}</p>
     </div>
   );
-};
+}
