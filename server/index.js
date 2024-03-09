@@ -4,7 +4,7 @@ app.use(express.json());
 const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const multer  = require("multer");
+const multer = require("multer");
 const upload = multer({ dest: 'uploads/' });
 require("dotenv").config();
 
@@ -29,15 +29,31 @@ const socket_map = {
 }
 
 app.post("/init-camera", (req, res) => {
-  // use req to get camera id
-  console.log(req);
-  const camera_id = req.body.public_key;
+  console.log("in init-camera");
+  const camera_id = req.body.public_key; // Assuming the camera ID is sent in the request body
   if (!(camera_id in camera_to_client)){
-    camera_to_client[camera_id] = false;
+    camera_to_client[camera_id] = false; // Initialize the camera ID with a default value
+    res.json({ success: true, message: "Camera initialized" });
+    console.log("Camera initialized with id: " + camera_id);
   } else {
     console.log("Camera already exists");
+    res.json({ success: false, message: "Camera already exists" });
   }
-})
+});
+
+app.post("/reset-camera", (req, res) => {
+  // use req to get camera id
+  if (camera_id in camera_to_client){
+    const client_id = camera_to_client[camera_id];
+    if (client_id && client_id in socket_map){
+      socket_map[client_id]["borrowing"] = false;
+    }
+    camera_to_client[camera_id] = false;
+    
+  } else {
+    console.log("Camera doesn't exist");
+  }
+});
 
 app.post("/reset-camera", (req, res) => {
   // use req to get camera id
@@ -55,10 +71,12 @@ app.post("/reset-camera", (req, res) => {
 
 app.post("/pi/upload", upload.single("image"), (req, res) => {
   // use req to get camera id
+  console.log("in pi/upload");
   
   console.log('File:', req.file);
   console.log('Metadata:', req.body); // Access metadata
   
+  console.log("camera_id: " + camera_id);
   const camera_id = req.body.public_key;
   const img_data = req.file;
 
