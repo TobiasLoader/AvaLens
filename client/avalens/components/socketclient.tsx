@@ -1,4 +1,5 @@
-'use client'
+
+import styles from "../app/page.module.css";
 
 import React, { useState, useEffect } from 'react';
 
@@ -35,8 +36,8 @@ export default function SocketClient({ serverUrl, clientId }) {
   }, [serverUrl]); // Re-run the effect if serverUrl changes
 
   return (
-    <div>
-      {socketLoaded ? "Socket Connected" : "Connecting..."}
+    <div className={styles.socketConnect}>
+      <p>{socketLoaded ? "Socket Connected" : "Connecting..."}</p>
     </div>
   );
 };

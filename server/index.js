@@ -55,15 +55,29 @@ app.post("/reset-camera", (req, res) => {
   }
 });
 
+app.post("/reset-camera", (req, res) => {
+  // use req to get camera id
+  if (camera_id in camera_to_client){
+    const client_id = camera_to_client[camera_id];
+    if (client_id && client_id in socket_map){
+      socket_map[client_id]["borrowing"] = false;
+    }
+    camera_to_client[camera_id] = false;
+    
+  } else {
+    console.log("Camera doesn't exists");
+  }
+});
+
 app.post("/pi/upload", upload.single("image"), (req, res) => {
   // use req to get camera id
+  console.log("in pi/upload");
   
   console.log('File:', req.file);
   console.log('Metadata:', req.body); // Access metadata
   
-  const camera_id = req.body.public_key;
   console.log("camera_id: " + camera_id);
-  console.log("camera_id: " + camera_id);
+  const camera_id = req.body.public_key;
   const img_data = req.file;
 
   if (camera_id in camera_to_client){
