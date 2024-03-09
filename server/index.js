@@ -8,6 +8,9 @@ const multer = require("multer");
 const upload = multer({ dest: 'uploads/' });
 require("dotenv").config();
 
+// for saving images with multer
+app.use('/uploads', express.static('uploads'));
+
 const client = process.env.CLIENT || "http://localhost:3000";
 const port = process.env.PORT || 3001;
 
@@ -50,24 +53,19 @@ app.post("/reset-camera", (req, res) => {
 });
 
 app.post("/pi/upload", upload.single("image"), (req, res) => {
-  console.log("in pi/upload");
   const camera_id = req.body.public_key;
-  console.log("Upload request from camera_id: ", camera_id);
 
   if (camera_id in camera_to_client) {
     const client_id = camera_to_client[camera_id];
-    console.log("client_id, camera_id, socket_map: " + client_id, camera_id, socket_map)
     if (client_id && client_id in socket_map) {
       const socket = socket_map[client_id]["socket"];
-      console.log("emitting pi-capture with following: " + { img_data: req.file })
-      socket.emit("pi-capture", { img_data: req.file }); // Assuming 'req.file' is the correct way to access the uploaded file
+      const img_url = `${req.protocol}://${req.get('host')}/uploads/${req.file.filename}`;
+      socket.emit("pi-capture", img_url);
       res.json({ success: true, message: "Image uploaded and sent to client" });
     } else {
-      console.log("No client associated with camera_id: ", camera_id);
       res.json({ success: false, message: "No client associated with this camera" });
     }
   } else {
-    console.log("Camera not initialized: ", camera_id);
     res.json({ success: false, message: "Camera not initialized" });
   }
 });
