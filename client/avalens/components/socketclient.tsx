@@ -34,10 +34,16 @@ export default function SocketClient({ serverUrl, clientId }) {
 
     loadSocketIO();
   }, [serverUrl]); // Re-run the effect if serverUrl changes
-
+  
   return (
-    <div className={styles.socketConnect}>
-      <p>{socketLoaded ? "Socket Connected" : "Connecting..."}</p>
-    </div>
+    socketLoaded ? (
+      <div className={`${styles.socketConnect} ${styles.connected}`}>
+        <p>Socket Connected!</p>
+      </div>
+    ) : (
+      <div className={`${styles.socketConnect} ${styles.connecting}`}>
+        <p>Connecting...</p>      
+      </div>
+    )
   );
 };
