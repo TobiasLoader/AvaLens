@@ -1,21 +1,24 @@
 import React from 'react';
 import styles from "../app/page.module.css";
 import { Button } from './button';
+import { ImgVoteEntry } from './ImgVoteEntry';
 
 export const RightImagesPane = ({ }) => {
+  const items = ['addr1', 'addr2', 'addr3'];
+  
   return (
     <div className={styles.rightImagesPane}>
-      {/* {
-        borrowed ? (
-          imageSrc ? (
-            <img src={imageSrc} alt="picture captured icon" className={styles.imgCapture} />
-          ) : (
-            <img src={"/takepic.svg"} alt="take pic icon" className={styles.takePicIcon} />
-          )
-        ) : (
-          <img src={"/borrowcam.svg"} alt="borrow camera icon" className={styles.borrowCameraIcon} />
-        )
-      } */}
+      {items.map((item, index) => (
+        <ImgVoteEntry />
+      ))}
+      <Button
+        className={styles.endVoteBtn}
+        onClick={() => {
+          console.log('End Voting Now')
+        }}
+      >
+      End Voting Now
+      </Button>
     </div>
   );
 };

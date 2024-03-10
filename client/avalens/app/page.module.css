@@ -14,6 +14,12 @@
   border-radius:20px;
   box-shadow: 0 0 10px 5px rgba(255, 255, 255,0.12);
   padding:10px 20px;
+  border:1px solid transparent;
+}
+
+.navigation:hover {
+  box-shadow: 0 0 0 0 transparent;
+  border:1px solid rgba(255,255,255,0.1);
 }
 
 .avalensLogo {
@@ -80,11 +86,11 @@
 
 .cameraCard {
   position: absolute;
-  background:rgba(0,0,0,0.7);
-  border:rgba(255,255,255,0.3) 1px solid;
-  border-radius: 5px;
-  padding:20px;
-  min-width:300px;
+  background:rgba(255,255,255,0.12);
+  border:rgba(255,255,255,0.2) 1px solid;
+  border-radius: 20px;
+  padding:4rem;
+  min-width:400px;
   left:50%;
   top: 50%;
   transform: translate(-50%, -50%);
@@ -121,15 +127,43 @@
 }
 
 .leftImagesPane {
-  max-width: 400px;
-}
-
-.rightImagesPane {
-  flex:1;
+  position: relative;
+  background:rgba(255,255,255,0.12);
+  min-width: 500px;
+  margin: 4em 0;
+  border-radius: 20px;
+  border: rgba(255,255,255,0.2) 1px solid;
+  margin-right:4em;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
 .imgCapture {
   width:300px;
+}
+
+.mintBtn {
+  position: absolute;
+  left:1rem;
+  bottom:1rem;
+  max-width: 200px;
+}
+
+
+.rightImagesPane {
+  position: relative;
+  flex:1;
+  background:rgba(255,255,255,0.12);
+  margin: 4em 0;
+  border-radius: 20px;
+  border: rgba(255,255,255,0.2) 1px solid;
+}
+
+.endVoteBtn {
+  position: absolute;
+  bottom:1rem;
+  right:1rem;
 }
 
 .connected {

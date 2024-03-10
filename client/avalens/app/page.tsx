@@ -5,12 +5,12 @@ import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import styles from "./page.module.css";
 import SocketClient from '../components/SocketClient';
-import LeftImagesPane from '../components/LeftImagesPane';
-import RightImagesPane from '../components/RightImagesPane';
 import { Navigation } from '../components/Nav';
+import { MainPage } from '../components/MainPage';
 import { Web3Provider } from '../providers/web3provider';
-import GlobeComponent from '../components/Globe';
-import CameraCard from '../components/CameraCard';
+
+{/* import { ConnectWalletButton } from '../components/connectwalletbtn/connectwalletbtn';
+import { PageButton } from '../components/pagebutton'; */}
 
 export default function Home() {
   const remoteUrl = "https://avalens.onrender.com";
@@ -19,10 +19,9 @@ export default function Home() {
   const serverUrl = remoteUrl;
   
   const [isClient, setIsClient] = useState(false);
-  const [imageSrc, setImageSrc] = useState('');
-  const [page, setPage] = useState("camera");
-  const [borrowed, setBorrowed] = useState(false);
-  const [viewCamera, setViewCamera] = useState(false);
+  const [imageSrc, setImageSrc] = useState('adfs');
+  const [page, setPage] = useState("images");
+  const [viewCamera, setViewCamera] = useState(true);
 
   useEffect(() => {
     setIsClient(typeof window !== 'undefined');
@@ -33,21 +32,7 @@ export default function Home() {
       {isClient ? (
         <Web3Provider>
           <Navigation page={page} setPage={setPage} />
-          <div className={styles.pageMain}>
-            {page === "camera" ? (
-              <>
-                <GlobeComponent viewCamera={viewCamera} setViewCamera={setViewCamera} />
-                {viewCamera ? (<CameraCard borrowed={borrowed} setBorrowed={setBorrowed} cameraAddr={"0x01"} clientAddr={"0x01"} borrowCost={20} />) : null}
-              </>
-            ) : page === "images" ? (
-              <div className={styles.imagesPaneWindow}>
-                <LeftImagesPane imageSrc={imageSrc} borrowed={borrowed} />
-                <RightImagesPane />
-              </div>
-            ) : page === "user" ? (
-              <p className={styles.centerPage}>User page coming soon</p>
-            ) : null}
-          </div>
+          <MainPage isClient={isClient} viewCamera={viewCamera} setViewCamera={setViewCamera} imageSrc={imageSrc} page={page} />
           <SocketClient serverUrl={serverUrl} clientId={"0x00"} setImageSrc={setImageSrc} />
         </Web3Provider>
       ) : (

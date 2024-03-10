@@ -13,7 +13,10 @@ export const CameraCard = ({ borrowed, setBorrowed, cameraAddr, borrowCost, clie
       <div className={styles.cameraCardBtnRow}>
         <Button
           className={styles.borrowBtn}
-          onClick={() => console.log('borrow')}
+          onClick={() => {
+            console.log('borrow');
+            setBorrowed(true);
+          }}
         >
         Borrow
         </Button>
