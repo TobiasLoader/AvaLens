@@ -34,6 +34,9 @@ export const C_CHAIN = {
     //   decimals: 18,
     //   abi: PHOTOGRAPH_ABI,
     // },
+    
+    
+    
     // // Note, for C-Chain the mintable ERC-20 is the same as the teleported one
     // teleportedErc20: {
     //   universalId: '43113-0x6F419E35a60439569640ca078ba5e86599E30cC6',
