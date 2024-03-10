@@ -7,7 +7,7 @@
 
 pragma solidity 0.8.18;
 
-import "../../Teleporter/ITeleporterMessenger.sol";
+import ""https://github.com/ava-labs/teleporter/blob/main/contracts/src/Teleporter/ITeleporterMessenger.sol"";
 
 /**
  * @dev ExampleCrossChainMessenger is an example contract that demonstrates how to send and receive
