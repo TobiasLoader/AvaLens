@@ -68,7 +68,7 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
   console.log("camera_id: " + camera_id);
   const img_data = req.file;
 
-  console.log("socket_map",socket_map)
+  // console.log("socket_map",socket_map)
   console.log("camera_to_client",camera_to_client)
 
   if (camera_id in camera_to_client){
@@ -80,6 +80,8 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
       socket.emit("pi-capture", img_data);
     } else {
       console.log("Client with ID given by `camera_to_client` doesn't exist");
+      console.log("camera_id:", camera_id);
+      console.log("client_id:", client_id);
     }
   } else {
     console.log("Camera with that ID doens't exist");
@@ -91,15 +93,10 @@ io.sockets.on("connection", function (socket) {
   
   // init photographer to node server sockets
   socket.on("client_init", function (id){
-    if (!(id in socket_map)){
-      socket_map[id] = {};
-      socket_map[id]["borrowing"] = false;
-      socket_map[id]["socket"] = socket;
-      console.log("client initialised",id);
-    } else {
-      console.log("Socket already exists with client ",id);
-    }
-    console.log("client initialised",id)
+    socket_map[id] = {};
+    socket_map[id]["borrowing"] = false;
+    socket_map[id]["socket"] = socket;
+    console.log("client initialised",id);
   });
   
   // create association between photographer and camera
