@@ -20,10 +20,12 @@ export default function SocketClient({ serverUrl, clientId, setImageSrc }) {
       });
 
       newSocket.on("pi-capture", (data) => {
+        console.log('pi-capture');
         console.log(data);
-        if (data.img_data && data.img_data.filename) {
-          const imageUrl = `${serverUrl}/uploads/${data.img_data.filename}`;
+        if (data.filename) {
+          const imageUrl = `${serverUrl}/uploads/${data.filename}`;
           setImageSrc(imageUrl);
+          console.log('received from pi',imageUrl);
         }
       });
 

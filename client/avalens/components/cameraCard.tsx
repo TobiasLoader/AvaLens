@@ -2,10 +2,11 @@ import React from 'react';
 import styles from "../app/page.module.css";
 import { Button } from './button';
 
-export const CameraCard = ({ borrowed, setBorrowed, cameraAddr, borrowCost, clientAddr }) => {
+export const CameraCard = ({ setViewCamera, borrowed, setBorrowed, cameraAddr, borrowCost, clientAddr }) => {
+  
   return (
     <div className={styles.cameraCard}>
-      <img src={"/cameraicon.svg"} alt="Camera icon" className={styles.cameraIcon} />
+      <img src={"/avalens.png"} alt="Camera icon" className={styles.cameraIcon} />
       <div className={styles.cameraCardData}>
         <p>Address: {cameraAddr}</p>  
         <p>Borrow: {borrowCost} MERIT</p>  
@@ -16,6 +17,7 @@ export const CameraCard = ({ borrowed, setBorrowed, cameraAddr, borrowCost, clie
           onClick={() => {
             console.log('borrow');
             setBorrowed(true);
+            setViewCamera(currentViewCamera => !currentViewCamera);
           }}
         >
         Borrow

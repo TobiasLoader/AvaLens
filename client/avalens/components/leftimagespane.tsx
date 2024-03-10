@@ -3,8 +3,9 @@ import styles from "../app/page.module.css";
 import { Button } from './button';
 
 export const LeftImagesPane = ({ borrowed, imageSrc }) => {
+  console.log(imageSrc);
   return (
-    <div className={styles.leftImagesPane}>
+    <div className={`${styles.leftImagesPane} ${styles.mainRegion}`}>
       {
         borrowed ? (
           imageSrc ? (

@@ -19,9 +19,9 @@ export default function Home() {
   const serverUrl = remoteUrl;
   
   const [isClient, setIsClient] = useState(false);
-  const [imageSrc, setImageSrc] = useState('adfs');
+  const [imageSrc, setImageSrc] = useState('');
   const [page, setPage] = useState("images");
-  const [viewCamera, setViewCamera] = useState(true);
+  const [viewCamera, setViewCamera] = useState(false);
 
   useEffect(() => {
     setIsClient(typeof window !== 'undefined');

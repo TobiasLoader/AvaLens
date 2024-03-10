@@ -10,14 +10,18 @@
 .navigation {
   display: flex;
   justify-content: space-between;
-  background:rgba(255,255,255,0.12);
-  border-radius:20px;
-  box-shadow: 0 0 10px 5px rgba(255, 255, 255,0.12);
   padding:10px 20px;
-  border:1px solid transparent;
 }
 
-.navigation:hover {
+.mainRegion {
+  border:1px solid transparent;
+  box-shadow: 0 0 10px 5px rgba(255, 255, 255,0.12);
+  background:rgba(255,255,255,0.12);
+  border-radius:20px;
+  border:1px solid rgba(255,255,255,0.05);
+}
+
+.mainRegion:hover {
   box-shadow: 0 0 0 0 transparent;
   border:1px solid rgba(255,255,255,0.1);
 }
@@ -82,11 +86,12 @@
 
 .globeWrapper {
   margin-top:10px;
+  min-height:calc(100vh - 16rem);
 }
 
 .cameraCard {
   position: absolute;
-  background:rgba(255,255,255,0.12);
+  background:rgba(0, 0, 0, 0.8);
   border:rgba(255,255,255,0.2) 1px solid;
   border-radius: 20px;
   padding:4rem;
@@ -97,18 +102,29 @@
 }
 
 .cameraIcon {
-  max-height: 80px;
-  margin: 10px 0;
+  max-height: 100px;
+  margin-bottom: 10px;
 }
 
 .cameraCardData {
-  margin: 10px 0;
+  margin-bottom: 20px;
 }
 
 .cameraCardBtnRow {
   display: flex;
   justify-content: space-between;
   margin-top:20px;
+}
+
+.globeWrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.globeStaticImg {
+  width: 100%;
+  cursor: pointer;
 }
 
 .socketConnect {
@@ -128,11 +144,8 @@
 
 .leftImagesPane {
   position: relative;
-  background:rgba(255,255,255,0.12);
-  min-width: 500px;
+  min-width: 700px;
   margin: 4em 0;
-  border-radius: 20px;
-  border: rgba(255,255,255,0.2) 1px solid;
   margin-right:4em;
   display: flex;
   flex-direction: column;
@@ -140,7 +153,7 @@
 }
 
 .imgCapture {
-  width:300px;
+  width:700px;
 }
 
 .mintBtn {
@@ -154,10 +167,41 @@
 .rightImagesPane {
   position: relative;
   flex:1;
-  background:rgba(255,255,255,0.12);
+  display: flex;
+  flex-direction: column;
   margin: 4em 0;
-  border-radius: 20px;
-  border: rgba(255,255,255,0.2) 1px solid;
+  padding:2rem;
+}
+
+.voteEntryContainer {
+  overflow: auto;
+  flex:1;
+}
+
+.voteEntry {
+  display:flex;
+  margin-bottom: 1rem;
+}
+
+.voteEntryImage {
+  max-height: 150px;
+}
+
+.voteEntryMetadataContainer {
+  display: flex;
+  flex-direction: column;
+  margin-left:30px;
+  justify-content: center;
+}
+
+.voteEntryMetadataContainer > * {
+  margin-bottom: 1rem;
+}
+
+.bottomRightPane {
+  height:70px;
+  width:100%;
+  border-top:rgba(255,255,255,0.2) 1px solid;
 }
 
 .endVoteBtn {
