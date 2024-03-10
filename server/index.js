@@ -31,7 +31,7 @@ const socket_map = {
 app.post("/init-camera", (req, res) => {
   console.log("in init-camera");
   const camera_id = req.body.public_key; // Assuming the camera ID is sent in the request body
-  if (!(camera_id in camera_to_client)){
+  if (camera_id && !(camera_id in camera_to_client)){
     camera_to_client[camera_id] = false; // Initialize the camera ID with a default value
     res.json({ success: true, message: "Camera initialized" });
     console.log("Camera initialized with id: " + camera_id);
@@ -104,7 +104,8 @@ io.sockets.on("connection", function (socket) {
   
   // create association between photographer and camera
   socket.on("borrow_camera", function (client_id,camera_id){
-    if ( client_id in socket_map
+    if ( camera_id in camera_to_client && 
+        client_id in socket_map
     ){
       socket_map[client_id]["borrowing"] = camera_id;
       camera_to_client[camera_id] = client_id;
