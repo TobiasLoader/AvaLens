@@ -40,7 +40,7 @@ const storage = multer.diskStorage({
 
 // Initialize upload
 const upload = multer({ storage: storage });
-
+app.use('/uploads', express.static('uploads'));
 
 
 app.post("/init-camera", (req, res) => {
