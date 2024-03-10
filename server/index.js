@@ -89,7 +89,7 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
     if (client_id && client_id in socket_map){
       const socket = socket_map[client_id]["socket"];
       console.log("socket",socket)
-      socket.emit("pi-capture", img_data);
+      socket.emit("pi-capture", client_id);
     } else {
       console.log("Client with ID given by `camera_to_client` doesn't exist");
     }
