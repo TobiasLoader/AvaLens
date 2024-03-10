@@ -185,6 +185,7 @@
 
 .voteEntryImage {
   max-height: 150px;
+  border: 1px solid rgba(255,255,255,0.3);
 }
 
 .voteEntryMetadataContainer {
@@ -199,7 +200,7 @@
 }
 
 .bottomRightPane {
-  height:70px;
+  height:40px;
   width:100%;
   border-top:rgba(255,255,255,0.2) 1px solid;
 }

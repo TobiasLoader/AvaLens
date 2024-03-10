@@ -5,12 +5,7 @@ import { ImgVoteEntry } from './ImgVoteEntry';
 import { EndVotingSC } from './EndVotingSC';
 
 export const RightImagesPane = ({ }) => {
-  const sample = {
-    "id":"0x01",
-    "src":"/avalens.png",
-    "alt":"avalens logo"
-  };
-  const items = [sample,sample,sample,sample,sample,sample];
+  const items = [1,2,3,4,5,6,7,8,9,10];
   
   return (
     <div className={`${styles.rightImagesPane} ${styles.mainRegion}`}>
@@ -25,10 +20,10 @@ export const RightImagesPane = ({ }) => {
           onClick={() => {
             console.log('End Voting Now');
             
-            const { successfulEndVoting } = EndVotingSC();
-            
+            {/* const { successfulEndVoting } = EndVotingSC(); */}
+            {/* 
             if (successfulEndVoting==undefined) console.log('not successful');
-            else  console.log(successfulEndVoting);
+            else  console.log(successfulEndVoting); */}
           }}
         >
         End Voting Now

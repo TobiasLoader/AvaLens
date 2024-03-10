@@ -5,9 +5,9 @@ import { Button } from './button';
 export const ImgVoteEntry = ({ index, item }) => {
   return (
     <div className={styles.voteEntry}>
-      <img src={item.src} alt={item.alt} className={styles.voteEntryImage} />
+      <img src={`/display/${index+4}.jpeg`} alt={item.alt} className={styles.voteEntryImage} />
       <div className={styles.voteEntryMetadataContainer}>
-        <p>{item.id}</p>
+        <p>{`ID: ${10+index}`}</p>
         <Button
           className={styles.voteImgBtn}
           onClick={() => console.log('vote:'+item.id)}

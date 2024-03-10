@@ -1,45 +1,24 @@
 import React from 'react';
 import styles from "../app/page.module.css";
 import { Button } from './button';
-import { useContract, useSigner, useProvider } from 'wagmi';
-import { useEffect, useState } from 'react';
-import { ethers } from 'ethers';
-
-import { DISPATCH_CHAIN } from '@/constants/chains';
+{/* import { useBorrowCameraSC } from './useBorrowCameraSC'; */}
 
 import { useAccount } from 'wagmi';
 export const CameraCard = ({ setViewCamera, borrowed, setBorrowed, stakeAmount, cameraId }) => {
   const { isConnected, address } = useAccount();
   
-  const { data: signer } = useSigner();
-  const provider = useProvider();
-  
-  const chain = DISPATCH_CHAIN;
-  
-  const contract = useContract({
-    addressOrName: chain.contracts.merit.address,
-    contractInterface: chain.contracts.merit.abi,
-    signerOrProvider: signer || provider,
-  });
-  
-  const contractWithSigner = contract.connect(signer);
-  
-  const borrowCamera = async () => {
-    if (!signer) {
-      alert('Please connect your wallet');
-      return;
-    }
-  
-    const destinationAddress = 'DESTINATION_ADDRESS_HERE'; // Set the destination address
+  {/* const { isSuccess } = useBorrowCameraSC({ cameraId, stakeAmount }); */}
+
+  {/* const handleBorrow = async () => {
     try {
-      const tx = await contractWithSigner.borrowCamera(cameraId, Big(stakeAmount).toString());
-      await tx.wait();
-      console.log('Tx sent successfully');
+      const txHash = await isSuccess();
+      alert(`Transaction successful: ${txHash}`);
     } catch (error) {
-      console.error('Error sending message:', error);
-      alert('Error sending message. See console for more details.');
+      console.error('Error borrowing camera:', error);
+      alert(`Error: ${error.message}`);
     }
-  };
+  }; */}
+  
   
   if (isConnected && address) {
     return (
@@ -68,7 +47,6 @@ export const CameraCard = ({ setViewCamera, borrowed, setBorrowed, stakeAmount, 
               else  console.log(successfulBorrow); */}
               
               {/* handleBorrow(); */}
-              borrowCamera();
             }}
           >
           Borrow
