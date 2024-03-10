@@ -30,35 +30,6 @@ export const SettingsMenu = () => {
   };
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button
-          variant="outline"
-          className="rounded-full whitespace-nowrap w-full"
-        >
-          <Circle
-            size={12}
-            className="mr-2 text-green-500 fill-green-500"
-          />
-          {truncateAddress(address)}
-          <Settings
-            size={16}
-            className="ml-2 text-gray-400"
-          />
-        </Button>
-      </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-56">
-        <DropdownMenuLabel>Settings</DropdownMenuLabel>
-        <DropdownMenuSeparator />
-        <DropdownMenuGroup>
-          <DropdownMenuItem onClick={handleDisconnectButtonClick}>
-            Disconnect
-            <DropdownMenuShortcut>
-              <ExitIcon />
-            </DropdownMenuShortcut>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
-      </DropdownMenuContent>
-    </DropdownMenu>
+    <p>Yo</p>
   );
 };

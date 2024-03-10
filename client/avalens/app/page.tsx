@@ -5,6 +5,7 @@ import React, { useEffect, useState } from 'react';
 import Image from "next/image";
 import styles from "./page.module.css";
 import SocketClient from '../components/SocketClient';
+import PhotoTaken from '../components/PhotoTaken';
 import { Navigation } from '../components/Nav';
 import { Web3Provider } from '../providers/web3provider';
 
@@ -15,6 +16,7 @@ export default function Home() {
   const serverUrl = remoteUrl;
   
   const [isClient, setIsClient] = useState(false);
+  const [imageSrc, setImageSrc] = useState('');
   
   useEffect(() => {
     setIsClient(typeof window !== 'undefined');
@@ -25,7 +27,8 @@ export default function Home() {
       {isClient ? (
         <Web3Provider>
           <Navigation />
-          <SocketClient serverUrl={serverUrl} clientId={"0x00"} />
+          <PhotoTaken imageSrc={imageSrc} setImageSrc={setImageSrc} />
+          <SocketClient serverUrl={serverUrl} clientId={"0x00"} setImageSrc={setImageSrc} />
         </Web3Provider>
       ) : (
         <></>

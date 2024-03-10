@@ -13,7 +13,6 @@ const queryClient = new QueryClient();
 const chains = [
   mapChainToWagmiChain(TELEPORTER_CONFIG.chains[0]),
   mapChainToWagmiChain(TELEPORTER_CONFIG.chains[1]),
-  mapChainToWagmiChain(TELEPORTER_CONFIG.chains[2]),
 ] as const;
 
 const config = defaultWagmiConfig({

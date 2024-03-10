@@ -1,10 +1,9 @@
 import styles from "../app/page.module.css";
 import React, { useState, useEffect } from 'react';
 
-export default function SocketClient({ serverUrl, clientId }) {
+export default function SocketClient({ serverUrl, clientId, setImageSrc }) {
   const [socket, setSocket] = useState(null);
   const [socketLoaded, setSocketLoaded] = useState(false);
-  const [imageSrc, setImageSrc] = useState('');
 
   useEffect(() => {
     const loadSocketIO = async () => {
@@ -34,7 +33,6 @@ export default function SocketClient({ serverUrl, clientId }) {
 
     loadSocketIO();
   }, [serverUrl, clientId]);
-<!--       {imageSrc && <img src={imageSrc} className={styles.imgCapture} alt="Captured" />} -->
   
   return (
     socketLoaded ? (
