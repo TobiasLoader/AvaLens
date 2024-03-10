@@ -1,11 +1,7 @@
 import styles from "../app/page.module.css";
 import React, { useState, useEffect } from 'react';
 
-import { useAccount } from 'wagmi';
-
-export default function SocketClient({ serverUrl, setImageSrc, borrowedCameraId }) {
-  const { address, isConnected } = useAccount();
-
+export default function SocketClient({ serverUrl, clientId, setImageSrc }) {
   const [socket, setSocket] = useState(null);
   const [socketLoaded, setSocketLoaded] = useState(false);
 
@@ -18,7 +14,8 @@ export default function SocketClient({ serverUrl, setImageSrc, borrowedCameraId 
         console.log('Socket connected:', newSocket.id);
         setSocket(newSocket);
         setSocketLoaded(true);
-        newSocket.emit("client_init", address);
+        newSocket.emit("client_init", clientId);
+        newSocket.emit("borrow_camera", clientId, "00000001");
         // newSocket.emit("return_camera", clientId, camera_id);
       });
 
@@ -36,20 +33,18 @@ export default function SocketClient({ serverUrl, setImageSrc, borrowedCameraId 
       return () => newSocket.disconnect();
     };
 
-    if (isConnected) loadSocketIO();
-  }, [serverUrl, isConnected, address]);
+    loadSocketIO();
+  }, [serverUrl, clientId]);
   
   return (
-    isConnected ? (
-      socketLoaded ? (
-        <div className={`${styles.socketConnect} ${styles.connected}`}>
-          <p>Socket Connected!</p>
-        </div>
-      ) : (
-        <div className={`${styles.socketConnect} ${styles.connecting}`}>
-          <p>Connecting...</p>      
-        </div>
-      )
-    ) : null
+    socketLoaded ? (
+      <div className={`${styles.socketConnect} ${styles.connected}`}>
+        <p>Socket Connected!</p>
+      </div>
+    ) : (
+      <div className={`${styles.socketConnect} ${styles.connecting}`}>
+        <p>Connecting...</p>      
+      </div>
+    )
   );
 };
