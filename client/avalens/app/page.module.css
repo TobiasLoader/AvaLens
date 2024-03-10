@@ -115,6 +115,19 @@
   /* transition:width 500ms ease-in-out; */
 }
 
+.imagesPaneWindow {
+  display: flex;
+  height:calc(100vh - 16rem);
+}
+
+.leftImagesPane {
+  max-width: 400px;
+}
+
+.rightImagesPane {
+  flex:1;
+}
+
 .imgCapture {
   width:300px;
 }

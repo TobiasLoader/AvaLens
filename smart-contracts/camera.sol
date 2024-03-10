@@ -26,7 +26,7 @@ contract CameraBorrowingSystem {
         require(cameraBorrower[cameraId] == msg.sender, "Not the borrower");
         uint256 stakeAmount = userStakes[msg.sender];
 
-        uint256 refundAmount = isDamaged ? (stakeAmount * 100) / 100 : stakeAmount * 90/100; // 10% is spent for camera renting
+        uint256 refundAmount = isDamaged ? 0 : stakeAmount * 90/100; // 10% is spent for camera renting
         require(meritToken.transfer(msg.sender, refundAmount), "Refund transfer failed");
 
         delete cameraBorrower[cameraId];

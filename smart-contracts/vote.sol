@@ -7,7 +7,9 @@
 
 pragma solidity 0.8.18;
 
-import ""https://github.com/ava-labs/teleporter/blob/main/contracts/src/Teleporter/ITeleporterMessenger.sol"";
+
+import "https://github.com/ava-labs/teleporter/blob/main/contracts/src/Teleporter/ITeleporterMessenger.sol";
+import "https://github.com/ava-labs/teleporter/blob/main/contracts/src/Teleporter/ITeleporterReceiver.sol";
 
 /**
  * @dev ExampleCrossChainMessenger is an example contract that demonstrates how to send and receive
@@ -15,7 +17,7 @@ import ""https://github.com/ava-labs/teleporter/blob/main/contracts/src/Teleport
  */
 contract Vote {
 
-    ITeleporterMessenger public immutable teleporterMessenger;
+    ITeleporterMessenger public immutable teleporterMessenger = ITeleporterMessenger(0x253b2784c75e510dD0fF1da844684a1aC0aa5fcf)
 
     // Mapping of imageId to votes received
     mapping(bytes32 => uint256) public userVotes;
@@ -28,16 +30,16 @@ contract Vote {
 
     constructor() {
         // Initialize userVotes mapping within the constructor
-        userVotes[bytes32("De0vYJ7k7D")] = 91;
-        userVotes[bytes32("qkGzdCRY9e")] = 72;
-        userVotes[bytes32("KM7HRQydNZ")] = 77;
-        userVotes[bytes32("eipbLjnyeG")] = 59;
-        userVotes[bytes32("gyGE5kaecT")] = 36;
-        userVotes[bytes32("76VfzkXOtG")] = 30;
-        userVotes[bytes32("N6SrxMNX8w")] = 26;
-        userVotes[bytes32("JFktwjtSka")] = 22;
-        userVotes[bytes32("DXM951ZMtd")] = 12;
-        userVotes[bytes32("sf6Qd9Vk2Y")] = 10;
+        userVotes[bytes32("Image1")] = 91;
+        userVotes[bytes32("Image2")] = 72;
+        userVotes[bytes32("Image3")] = 77;
+        userVotes[bytes32("Image4")] = 59;
+        userVotes[bytes32("Image5")] = 36;
+        userVotes[bytes32("Image6")] = 30;
+        userVotes[bytes32("Image7")] = 26;
+        userVotes[bytes32("Image8")] = 22;
+        userVotes[bytes32("Image9")] = 12;
+        userVotes[bytes32("Image10")] = 10;
         
 
         // Initialize imageOwners mapping
