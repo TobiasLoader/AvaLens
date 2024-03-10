@@ -43,6 +43,7 @@ app.post("/init-camera", (req, res) => {
 
 app.post("/reset-camera", (req, res) => {
   // use req to get camera id
+  console.log("in reset-camera");
   if (camera_id in camera_to_client){
     const client_id = camera_to_client[camera_id];
     if (client_id && client_id in socket_map){
@@ -55,19 +56,6 @@ app.post("/reset-camera", (req, res) => {
   }
 });
 
-app.post("/reset-camera", (req, res) => {
-  // use req to get camera id
-  if (camera_id in camera_to_client){
-    const client_id = camera_to_client[camera_id];
-    if (client_id && client_id in socket_map){
-      socket_map[client_id]["borrowing"] = false;
-    }
-    camera_to_client[camera_id] = false;
-    
-  } else {
-    console.log("Camera doesn't exists");
-  }
-});
 
 app.post("/pi/upload", upload.single("image"), (req, res) => {
   // use req to get camera id
@@ -116,9 +104,7 @@ io.sockets.on("connection", function (socket) {
   
   // create association between photographer and camera
   socket.on("borrow_camera", function (client_id,camera_id){
-    if (camera_id in camera_to_client
-      && !camera_to_client[camera_id]
-      && client_id in socket_map
+    if ( client_id in socket_map
     ){
       socket_map[client_id]["borrowing"] = camera_id;
       camera_to_client[camera_id] = client_id;
