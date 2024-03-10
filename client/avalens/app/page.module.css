@@ -1,10 +1,145 @@
+
+
+/*  CUSTOM CSS  */
+
+.main {
+  padding: 0;
+  height:max-content;
+}
+
+.navigation {
+  display: flex;
+  justify-content: space-between;
+  background:rgba(255,255,255,0.12);
+  border-radius:20px;
+  box-shadow: 0 0 10px 5px rgba(255, 255, 255,0.12);
+  padding:10px 20px;
+}
+
+.avalensLogo {
+  height: 60px;
+  background: radial-gradient(black 0%, transparent 80%);
+  border-radius: 60px;
+}
+
+.pageRow {
+  display: flex;
+  flex: auto;
+  border-left: 1px solid rgba(255,255,255,0.1);
+  margin-left:20px;
+}
+
+.navigation .pageButton {
+  transition: opacity 200ms ease-in-out;
+  opacity: 0.5;
+  padding: 10px 0;
+  font-family: var(--font-mono);
+  padding: 0 40px;
+  border-right: 1px solid rgba(255,255,255,0.1);
+  line-height:60px;
+  cursor: pointer;
+}
+
+.navigation .pageButton.pageButtonCurrent {
+  opacity: 1;
+}
+
+.buttonBase {
+  font-family: var(--font-mono);
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 10px 25px;
+  background: rgba(0,0,0,1);
+  border: rgba(255,255,255,0.3) 1px solid;
+}
+
+.buttonBase:hover {
+  background: linear-gradient(90deg, rgba(195, 96, 96, 0.25) 0%, rgba(83, 130, 201, 0.25) 100%);
+  border: rgba(255,255,255,0.4) 1px solid;
+}
+
+.connectWallet {
+  margin: 10px 0;
+}
+
+
+.pageMain {
+  min-height: calc(100vh - 16rem);
+}
+
+.centerPage {
+  transform: translate(-50%, -50%);
+  left: 50%;
+  top: 50%;
+  position: absolute;
+}
+
+.globeWrapper {
+  margin-top:10px;
+}
+
+.cameraCard {
+  position: absolute;
+  background:rgba(0,0,0,0.7);
+  border:rgba(255,255,255,0.3) 1px solid;
+  border-radius: 5px;
+  padding:20px;
+  min-width:300px;
+  left:50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.cameraIcon {
+  max-height: 80px;
+  margin: 10px 0;
+}
+
+.cameraCardData {
+  margin: 10px 0;
+}
+
+.cameraCardBtnRow {
+  display: flex;
+  justify-content: space-between;
+  margin-top:20px;
+}
+
+.socketConnect {
+  font-size: 13px;
+  font-family: var(--font-mono);
+  border: rgba(255,255,255,0.3) 1px solid;
+  border-radius: 5px;
+  padding: 10px 25px;
+  width:fit-content;
+  /* transition:width 500ms ease-in-out; */
+}
+
+.imgCapture {
+  width:300px;
+}
+
+.connected {
+  background: linear-gradient(90deg, rgba(195, 96, 96, 0.25) 0%, rgba(83, 130, 201, 0.25) 100%);
+  border: rgba(255,255,255,0.3) 1px solid;
+  color: rgb(236, 255, 223);
+}
+
+.connecting {
+  background: rgba(255, 232, 235, 0.1);
+  color: rgb(255, 232, 235);
+}
+
+
+
+/* EXISTING CSS */
+
+
 .main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  align-items: center;
-  padding: 6rem;
-  min-height: 100vh;
+  /* align-items: center; */
 }
 
 .description {
@@ -230,48 +365,3 @@
 }
 
 
-
-
-/*  CUSTOM CSS  */
-
-
-.connectWallet {
-  font-family: var(--font-mono);
-  cursor: pointer;
-  border-radius: 5px;
-  padding: 10px 25px;
-  background: rgba(255,255,255,0.05);
-  border: rgba(255,255,255,0.3) 1px solid;
-}
-
-.connectWallet:hover {
-  background: rgba(255,255,255,0.1);
-  border: rgba(255,255,255,0.4) 1px solid;
-}
-
-
-
-.socketConnect {
-  font-size: 13px;
-  font-family: var(--font-mono);
-  border: rgba(255,255,255,0.3) 1px solid;
-  border-radius: 5px;
-  padding: 10px 25px;
-  width:fit-content;
-  /* transition:width 500ms ease-in-out; */
-}
-
-.imgCapture {
-  width:300px;
-}
-
-.connected {
-  background: linear-gradient(90deg, rgba(96, 195, 111, 0.25) 0%, rgba(83, 130, 201, 0.25) 100%);
-  border: rgba(255,255,255,0.3) 1px solid;
-  color: rgb(236, 255, 223);
-}
-
-.connecting {
-  background: rgba(255, 232, 235, 0.1);
-  color: rgb(255, 232, 235);
-}

@@ -8,6 +8,8 @@ import SocketClient from '../components/SocketClient';
 import PhotoTaken from '../components/PhotoTaken';
 import { Navigation } from '../components/Nav';
 import { Web3Provider } from '../providers/web3provider';
+import GlobeComponent from '../components/Globe';
+import CameraCard from '../components/CameraCard';
 
 export default function Home() {
   const remoteUrl = "https://avalens.onrender.com";
@@ -17,7 +19,10 @@ export default function Home() {
   
   const [isClient, setIsClient] = useState(false);
   const [imageSrc, setImageSrc] = useState('');
-  
+  const [page, setPage] = useState("camera");
+  const [borrowed, setBorrowed] = useState(false);
+  const [viewCamera, setViewCamera] = useState(false);
+
   useEffect(() => {
     setIsClient(typeof window !== 'undefined');
   }, []);
@@ -26,8 +31,19 @@ export default function Home() {
     <main className={styles.main}>
       {isClient ? (
         <Web3Provider>
-          <Navigation />
-          <PhotoTaken imageSrc={imageSrc} setImageSrc={setImageSrc} />
+          <Navigation page={page} setPage={setPage} />
+          <div className={styles.pageMain}>
+            {page === "camera" ? (
+              <>
+                <GlobeComponent viewCamera={viewCamera} setViewCamera={setViewCamera} />
+                {viewCamera ? (<CameraCard borrowed={borrowed} setBorrowed={setBorrowed} cameraAddr={"0x01"} clientAddr={"0x01"} borrowCost={20} />) : null}
+              </>
+            ) : page === "images" ? (
+              <PhotoTaken imageSrc={imageSrc} setImageSrc={setImageSrc} />
+            ) : page === "user" ? (
+              <p className={styles.centerPage}>User page coming soon</p>
+            ) : null}
+          </div>
           <SocketClient serverUrl={serverUrl} clientId={"0x00"} setImageSrc={setImageSrc} />
         </Web3Provider>
       ) : (
