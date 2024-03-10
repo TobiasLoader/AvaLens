@@ -5,7 +5,7 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const multer = require("multer");
-const upload = multer({ dest: 'uploads/' });
+// const upload = multer({ dest: 'uploads/' });
 require("dotenv").config();
 
 const client = process.env.CLIENT || "http://localhost:3000";
@@ -21,12 +21,27 @@ const io = new Server(server, {
 var camera_to_client = {
   "camera_id":false
 };
+
 const socket_map = {
   "client_id":{
     "borrowing":"camera_id",
     "socket":"socket_id between client and nodejs server"
   }
 }
+
+// Set up storage engine with multer
+const storage = multer.diskStorage({
+  destination: 'uploads/',
+  filename: function(req, file, cb){
+    // You can use the originalname or any naming convention you prefer
+    cb(null, file.originalname);
+  }
+});
+
+// Initialize upload
+const upload = multer({ storage: storage });
+
+
 
 app.post("/init-camera", (req, res) => {
   console.log("in init-camera");
