@@ -2,6 +2,7 @@ import React from 'react';
 import styles from "../app/page.module.css";
 import { Button } from './button';
 import { ImgVoteEntry } from './ImgVoteEntry';
+import { EndVotingSC } from './EndVotingSC';
 
 export const RightImagesPane = ({ }) => {
   const sample = {
@@ -22,7 +23,12 @@ export const RightImagesPane = ({ }) => {
         <Button
           className={styles.endVoteBtn}
           onClick={() => {
-            console.log('End Voting Now')
+            console.log('End Voting Now');
+            
+            const { successfulEndVoting } = EndVotingSC();
+            
+            if (successfulEndVoting==undefined) console.log('not successful');
+            else  console.log(successfulEndVoting);
           }}
         >
         End Voting Now

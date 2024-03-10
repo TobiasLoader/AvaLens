@@ -22,6 +22,7 @@ export default function Home() {
   const [imageSrc, setImageSrc] = useState('');
   const [page, setPage] = useState("images");
   const [viewCamera, setViewCamera] = useState(false);
+  const [borrowedCameraId, setBorrowedCameraId] = useState("");
 
   useEffect(() => {
     setIsClient(typeof window !== 'undefined');
@@ -33,7 +34,7 @@ export default function Home() {
         <Web3Provider>
           <Navigation page={page} setPage={setPage} />
           <MainPage isClient={isClient} viewCamera={viewCamera} setViewCamera={setViewCamera} imageSrc={imageSrc} page={page} />
-          <SocketClient serverUrl={serverUrl} clientId={"0x00"} setImageSrc={setImageSrc} />
+          <SocketClient serverUrl={serverUrl} clientId={"0x00"} setImageSrc={setImageSrc} borrowedCameraId={borrowedCameraId} />
         </Web3Provider>
       ) : (
         <></>

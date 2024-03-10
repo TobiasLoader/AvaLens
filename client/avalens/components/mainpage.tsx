@@ -9,7 +9,6 @@ import { useAccount } from 'wagmi';
 export const MainPage = ({ isClient, viewCamera, setViewCamera, imageSrc, page }) => {
 
   const [borrowed, setBorrowed] = useState(false);
-
   const { address, isConnected } = useAccount();
   {/* console.log('mainpage',isConnected) */}
   return (
@@ -17,7 +16,7 @@ export const MainPage = ({ isClient, viewCamera, setViewCamera, imageSrc, page }
       {page === "camera" && isClient ? (
         <>
           <GlobeComponent viewCamera={viewCamera} setViewCamera={setViewCamera} />
-          {viewCamera ? (<CameraCard key={borrowed ? 'borrowed' : 'not-borrowed'} borrowed={borrowed} setBorrowed={setBorrowed} cameraAddr={"0x01"} clientAddr={"0x01"} borrowCost={20} setViewCamera={setViewCamera}/>) : null}
+          {viewCamera ? (<CameraCard key={borrowed ? 'borrowed' : 'not-borrowed'} borrowed={borrowed} setBorrowed={setBorrowed} setBorrowedCameraId={setBorrowedCameraId} cameraAddr={"0x01"}  borrowCost={20} setViewCamera={setViewCamera}/>) : null}
         </>
       ) : page === "images" ? (
         <div className={styles.imagesPaneWindow}>
