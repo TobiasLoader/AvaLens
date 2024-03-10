@@ -76,7 +76,7 @@ app.post("/pi/upload", upload.single("image"), (req, res) => {
   // console.log('File:', req.file);
   // console.log('Metadata:', req); // Access metadata
   
-  const camera_id = req.body.public_key;
+  const camera_id = req.body.public_key;
   console.log("camera_id: " + camera_id);
   const img_data = req.file;
 
@@ -123,8 +123,12 @@ io.sockets.on("connection", function (socket) {
       socket_map[client_id]["borrowing"] = camera_id;
       camera_to_client[camera_id] = client_id;
       console.log("client-camera pair",client_id,camera_id);
+      socket.emit("pi-capture", img_data); // test
+
     } else {
-      console.log("Either camera or client doesn't exist with ID given.");
+      console.log("borrow_camera: Either camera or client doesn't exist with ID given.");
+      console.log("camera_id: " + camera_id);
+      console.log("client_id: " + client_id);
     }
   });
   
@@ -136,7 +140,7 @@ io.sockets.on("connection", function (socket) {
       socket_map[client_id]["borrowing"] = false;
       camera_to_client[camera_id] = false;
     } else {
-      console.log("Either camera or client doesn't exist with ID given.");
+      console.log("return: Either camera or client doesn't exist with ID given.");
     }
   });
   
