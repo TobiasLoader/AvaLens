@@ -11,9 +11,9 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "https://github.com/ava-labs/teleporter/blob/main/contracts/src/Teleporter/ITeleporterMessenger.sol";
 import "https://github.com/ava-labs/teleporter/blob/main/contracts/src/Teleporter/ITeleporterReceiver.sol";
 
-contract Merit is ERC20, Ownable {
+contract MeritToken is ERC20, Ownable {
 
-    constructor() ERC20("Merit", "MERIT") {}
+    constructor() ERC20("MeritToken", "MERIT") {}
 
 
     /**
@@ -82,10 +82,10 @@ contract Merit is ERC20, Ownable {
         string fifthId,
         uint256 fifthMerit
     ) private {
-        mint(firstId, firstMerit);
-        mint(secondId, secondMerit);
-        mint(thirdId, thirdMerit);
-        mint(fourthId, fourthMerit);
-        mint(fifthId, fifthMerit);
+        mint(address(firstId), firstMerit);
+        mint(address(secondId), secondMerit);
+        mint(address(thirdId), thirdMerit);
+        mint(address(fourthId), fourthMerit);
+        mint(address(fifthId), fifthMerit);
     }
 }
