@@ -10,13 +10,13 @@ export const MainPage = ({ isClient, viewCamera, setViewCamera, imageSrc, page }
 
   const [borrowed, setBorrowed] = useState(false);
   const { address, isConnected } = useAccount();
-  {/* console.log('mainpage',isConnected) */}
+
   return (
     <div className={styles.pageMain}>
       {page === "camera" && isClient ? (
         <>
           <GlobeComponent viewCamera={viewCamera} setViewCamera={setViewCamera} />
-          {viewCamera ? (<CameraCard key={borrowed ? 'borrowed' : 'not-borrowed'} borrowed={borrowed} setBorrowed={setBorrowed} setBorrowedCameraId={setBorrowedCameraId} cameraAddr={"0x01"}  borrowCost={20} setViewCamera={setViewCamera}/>) : null}
+          {viewCamera ? (<CameraCard key={borrowed ? 'borrowed' : 'not-borrowed'} borrowed={borrowed} setBorrowed={setBorrowed} cameraId={"0x01"} stakeAmount={20} setViewCamera={setViewCamera}/>) : null}
         </>
       ) : page === "images" ? (
         <div className={styles.imagesPaneWindow}>

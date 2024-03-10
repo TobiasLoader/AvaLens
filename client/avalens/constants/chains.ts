@@ -1,6 +1,7 @@
 import type { EvmChain } from '@/types/chain';
 import { FAUCET_URL } from './urls';
-// import { TELEPORTER_BRIDGE_ABI } from './abis/teleporter-bridge.abi';
+import { MERIT_ABI } from './abis/merit.abi';
+import { VOTE_ABI } from './abis/vote.abi';
 // import { MINTABLE_ERC20_ABI } from './abis/mintable-erc-20.abi';
 // import { TELEPORTED_ERC20_ABI } from './abis/teleported-erc-20.abi';
 
@@ -26,9 +27,10 @@ export const C_CHAIN = {
     'https://images.ctfassets.net/gcj8jwzm6086/5VHupNKwnDYJvqMENeV7iJ/fdd6326b7a82c8388e4ee9d4be7062d4/avalanche-avax-logo.svg',
   primaryColor: '#e84142',
   contracts: {
-    // merit: {
-    //   
-    // },
+    vote: {
+      address:"0xDE015A2E823395F7cE90BB3e4FB3BC6D5a999073",
+      abi:VOTE_ABI,
+    },
     // mintableErc20: {
     //   universalId: '43113-0x6F419E35a60439569640ca078ba5e86599E30cC6',
     //   address: '0x6F419E35a60439569640ca078ba5e86599E30cC6',
@@ -80,6 +82,10 @@ export const DISPATCH_CHAIN = {
     'https://images.ctfassets.net/gcj8jwzm6086/60XrKdf99PqQKrHiuYdwTE/908622f5204311dbb11be9c6008ead44/Dispatch_Subnet_Logo.png',
   primaryColor: '#A05195',
   contracts: {
+    merit: {
+      address:"0x52382201C6C32383FFED83baD5066c2F6fa8C456",
+      abi:MERIT_ABI,
+    },
     // teleportedErc20: {
     //   universalId: '779672-0x80989a8F005c3445898DBD9892D3Abb96d08Cf2B',
     //   address: '0x80989a8F005c3445898DBD9892D3Abb96d08Cf2B',

@@ -12,6 +12,7 @@
     "@wagmi/core": "^2.6.5",
     "@web3modal/wagmi": "^4.0.13",
     "big.js": "^6.2.1",
+    "ethers": "^6.11.1",
     "globe.gl": "^2.32.2",
     "lodash-es": "^4.17.21",
     "next": "14.1.3",
